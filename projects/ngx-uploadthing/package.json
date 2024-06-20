@@ -1,0 +1,31 @@
+{
+  "name": "ngx-uploadthing",
+  "version": "0.0.1",
+  "description": "Unofficial Uploadthing SDK for Angular",
+  "keywords": [
+    "angular",
+    "uploadthing",
+    "file upload",
+    "typescript"
+  ],
+  "homepage": "https://github.com/miljan-code/ngx-uploadthing",
+  "bugs": {
+    "url": "https://github.com/miljan-code/ngx-uploadthing/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miljan-code/ngx-uploadthing.git",
+    "directory": "projects/ngx-uploadthing"
+  },
+  "license": "MIT",
+  "author": "https://github.com/miljan-code",
+  "peerDependencies": {
+    "@angular/common": "^17.3.0",
+    "@angular/core": "^17.3.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "uploadthing": "^6.12.0"
+  },
+  "sideEffects": false
+}
