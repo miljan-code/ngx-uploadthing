@@ -3,5 +3,6 @@
   "dest": "../../dist/ngx-uploadthing",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "allowedNonPeerDependencies": ["uploadthing"]
 }

@@ -1,24 +1,95 @@
-# NgxUploadthing
+# ngx-uploadthing
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
+An unofficial Angular 17+ wrapper for [Uploadthing](https://github.com/pingdotgg/uploadthing).
 
-## Code scaffolding
+## Prerequisites
 
-Run `ng generate component component-name --project ngx-uploadthing` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-uploadthing`.
-> Note: Don't forget to add `--project ngx-uploadthing` or else it will be added to the default project in your `angular.json` file. 
+- Angular 17
 
-## Build
+## Installation
 
-Run `ng build ngx-uploadthing` to build the project. The build artifacts will be stored in the `dist/` directory.
+To install ngx-uploadthing, run the following command in your project directory:
 
-## Publishing
+```bash
+npm install ngx-uploadthing
+```
 
-After building your library with `ng build ngx-uploadthing`, go to the dist folder `cd dist/ngx-uploadthing` and run `npm publish`.
+## Getting started
 
-## Running unit tests
+To begin using ngx-uploadthing in your project, follow these steps:
 
-Run `ng test ngx-uploadthing` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Import the uploadthing provider inside your app.config.ts file:
 
-## Further help
+```typescript
+import { provideUploadthing } from "ngx-uploadthing";
+import { OurFileRouter } from "~server/uploadthing.ts";
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+export const appConfig: ApplicationConfig = {
+  providers: [
+    ...,
+    provideUploadthing<OurFileRouter>({
+      // Replace with your own uploadthing endpoint
+      url: "http://localhost:3000/api/uploadthing",
+    }),
+  ],
+};
+```
+
+2. Use UploadthingDirective in your template to create a file uploader:
+
+```typescript
+import { Component } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import {
+  type ClientUploadedFileData,
+  type UploadOpts,
+  UploadthingDirective,
+  UploadthingService
+} from "ngx-uploadthing";
+import { OurFileRouter } from "~server/uploadthing.ts";
+
+type UploadedFile = ClientUploadedFileData<OurFileRouter>;
+
+@Component({
+  selector: "app-uploader",
+  standalone: true,
+  imports: [RouterOutlet, UploadthingDirective],
+  providers: [UploadthingService],
+  template: `
+    <input
+      type="file"
+      multiple
+      uploadthing
+      [config]="config"
+      (onUploadComplete)="handleUpload($event)"
+      (onFilesSelected)="handleSelectedFiles($event)"
+    />
+  `,
+})
+export class UploaderComponent {
+  config: UploadOpts = {
+    // Replace with your own uploadthing endpoint
+    endpoint: "videoAndImage",
+    // Set to true to enable uploads on input change
+    instantUpload: true,
+    ...,
+  };
+
+  handleUploadCompleted(files: UploadedFile[]) {
+    console.log(files);
+  }
+
+  handleSelectedFiles(files: FileList) {
+    console.log(files);
+  }
+}
+```
+
+## Features
+
+- **UploadthingService**: This service is a central part of the ngx-uploadthing library. It provides methods for uploading files and managing the upload state.
+
+  - uploadFiles$: A Subject that emits an object containing the upload options and files.
+  - files(): A signal that returns an array of uploaded files.
+  - status(): A signal that returns the current upload status.
+  - error(): A signal that returns the upload error if any.
