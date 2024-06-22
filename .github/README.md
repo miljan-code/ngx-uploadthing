@@ -39,7 +39,6 @@ export const appConfig: ApplicationConfig = {
 
 ```typescript
 import { Component } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
 import {
   type ClientUploadedFileData,
   type UploadOpts,
@@ -53,7 +52,7 @@ type UploadedFile = ClientUploadedFileData<OurFileRouter>;
 @Component({
   selector: "app-uploader",
   standalone: true,
-  imports: [RouterOutlet, UploadthingDirective],
+  imports: [UploadthingDirective],
   providers: [UploadthingService],
   template: `
     <input
