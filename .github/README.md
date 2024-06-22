@@ -40,14 +40,11 @@ export const appConfig: ApplicationConfig = {
 ```typescript
 import { Component } from "@angular/core";
 import {
-  type ClientUploadedFileData,
-  type UploadOpts,
+  type UploadedFileData,
+  type UploaderConfig,
   UploadthingDirective,
   UploadthingService
 } from "ngx-uploadthing";
-import { OurFileRouter } from "~server/uploadthing.ts";
-
-type UploadedFile = ClientUploadedFileData<OurFileRouter>;
 
 @Component({
   selector: "app-uploader",
@@ -60,13 +57,13 @@ type UploadedFile = ClientUploadedFileData<OurFileRouter>;
       multiple
       uploadthing
       [config]="config"
-      (onUploadComplete)="handleUpload($event)"
+      (onUploadComplete)="handleUploadCompleted($event)"
       (onFilesSelected)="handleSelectedFiles($event)"
     />
   `,
 })
 export class UploaderComponent {
-  config: UploadOpts = {
+  config: UploaderConfig = {
     // Replace with your own uploadthing endpoint
     endpoint: "videoAndImage",
     // Set to true to enable uploads on input change
@@ -74,7 +71,7 @@ export class UploaderComponent {
     ...,
   };
 
-  handleUploadCompleted(files: UploadedFile[]) {
+  handleUploadCompleted(files: UploadedFileData[]) {
     console.log(files);
   }
 
